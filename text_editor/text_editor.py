@@ -7,6 +7,7 @@ def open_file():
         with open(file_path, "r") as file:
             text.delete(1.0, tk.END)
             text.insert(tk.END, file.read())
+            update_word_count()
 
 def save_file():
     file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
@@ -16,14 +17,24 @@ def save_file():
 
 def clear_text():
     text.delete(1.0, tk.END)
+    update_word_count()
+
+def update_word_count():
+    content = text.get(1.0, tk.END)
+    words = content.split()
+    word_count_label.config(text=f"Word Count: {len(words)}")
+
+def on_key_release(event):
+    window.after(1000, update_word_count)
 
 # Create the main window
 window = tk.Tk()
-window.title("Text Editor")
+window.title("Simple Text Editor")
 
 # Create a text widget
 text = tk.Text(window, wrap=tk.WORD)
 text.pack(expand=tk.YES, fill=tk.BOTH)
+text.bind("<KeyRelease>", on_key_release)
 
 # Create a menu bar
 menu_bar = tk.Menu(window)
@@ -41,6 +52,10 @@ file_menu.add_command(label="Exit", command=window.quit)
 edit_menu = tk.Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Edit", menu=edit_menu)
 edit_menu.add_command(label="Clear", command=clear_text)
+
+# Create a label for word count
+word_count_label = tk.Label(window, text="Word Count: 0")
+word_count_label.pack()
 
 # Start the main loop
 window.mainloop()
