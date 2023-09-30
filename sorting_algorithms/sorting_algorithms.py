@@ -95,11 +95,13 @@ def quick_sort(arr, visualize=False):
         
         return sorted_array
 
+# main loop
 use_visualizer = False
 arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 print("Python Sorter!")
 while(True):
+    # Shuffle the number array so it can be sorted
     random.shuffle(arr)
     print("Here is your scrambled list of numbers: [" + ", ".join(map(str, arr)) + "]")
     print("Which sorting algorithm do you want to use?\nPlease enter a number. Enter q to quit.")
@@ -112,13 +114,18 @@ while(True):
     # if q is entered, quit
     if algorithm.lower() == "q":
         break
+    # store the input as an int
     algorithm = int(algorithm)
+    # print the steps of the sorting algorithm?
     visualizer_input = input("Visualizer? Y/N\n"
         "  > ")
 
+    # Turn visualizer input to boolean
     if visualizer_input.lower() == "y":
         use_visualizer = True
-
+    else:
+        use_visualizer = False
+    # use sorting algorithm
     if algorithm == 1:
         bubble_sort(arr, use_visualizer)
     elif algorithm == 2:
@@ -129,11 +136,10 @@ while(True):
         arr = merge_sort(arr, use_visualizer)
     elif algorithm == 5:
         arr = quick_sort(arr, use_visualizer)
-        
     else:
         print("Incorrect selection")
-
+    # print the sorted array if the visualizer is off
     if not use_visualizer:
         print(arr)
-    
+    # visually separate sort
     print("\n---------------------\n")
