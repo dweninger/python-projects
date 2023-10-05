@@ -5,7 +5,7 @@ import requests
 def fetch_weather():
     city = city_var.get()
     if city:
-        api_key = "YOUR_WEATHERSTACK_API_KEY"
+        api_key = "cf3a2fa45a08316004a06192db42b844"
         base_url = f"http://api.weatherstack.com/current?access_key={api_key}&query={city}"
         response = requests.get(base_url)
         data = response.json()
