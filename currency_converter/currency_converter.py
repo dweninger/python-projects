@@ -1,19 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
-# Define fixed conversion rates 
-conversion_rates = {
-    'USD': {'EUR': 0.85, 'GBP': 0.73, 
-            'JPY': 110.16, 'CAD': 1.26},
-    'EUR': {'USD': 1.18, 'GBP': 0.87, 
-            'JPY': 129.54, 'CAD': 1.49},
-    'GBP': {'USD': 1.37, 'EUR': 1.15, 
-            'JPY': 150.75, 'CAD': 1.71},
-    'JPY': {'USD': 0.0091, 'EUR': 0.0077, 
-            'GBP': 0.0066, 'CAD': 0.0082},
-    'CAD': {'USD': 0.79, 'EUR': 0.67, 
-            'GBP': 0.59, 'JPY': 122.41}
-}
+from forex_python.converter import CurrencyRates
 
 class CurrencyConverterApp:
     def __init__(self, root):
@@ -24,6 +11,8 @@ class CurrencyConverterApp:
         self.to_currency_var = tk.StringVar()
         self.amount_var = tk.StringVar()
         self.result_var = tk.StringVar()
+
+        self.c = CurrencyRates()
 
         self.create_gui()
 
@@ -50,7 +39,7 @@ class CurrencyConverterApp:
         from_currency_dropdown = ttk.Combobox(
             self.root, 
             textvariable=self.from_currency_var, 
-            values=list(conversion_rates.keys()))
+            values=list(self.c.get_rates("").keys()))
         from_currency_dropdown.grid(row=0, column=1)
         from_currency_dropdown.set('USD')
         from_currency_dropdown.config(
@@ -59,7 +48,7 @@ class CurrencyConverterApp:
         to_currency_dropdown = ttk.Combobox(
             self.root, 
             textvariable=self.to_currency_var, 
-            values=list(conversion_rates.keys()))
+            values=list(self.c.get_rates("").keys()))
         to_currency_dropdown.grid(row=1, column=1)
         to_currency_dropdown.set('EUR')
         to_currency_dropdown.config(
@@ -71,7 +60,7 @@ class CurrencyConverterApp:
             textvariable=self.amount_var, 
             font=("Arial", 18)).grid(row=2, column=1)
 
-        # Entry field for converted amount (readonly)
+        # Entry field for converted amount
         tk.Entry(
             self.root, 
             textvariable=self.result_var, 
@@ -93,13 +82,15 @@ class CurrencyConverterApp:
         amount = float(self.amount_var.get())
 
         try:
-            converted_amount = amount * conversion_rates[
-                from_currency][to_currency]
+            converted_amount = self.c.convert(
+                from_currency, 
+                to_currency, 
+                amount)
             self.result_var.set(
                 f"{amount} {from_currency} = "
                 f"{converted_amount:.2f} {to_currency}")
-        except KeyError:
-            self.result_var.set("Invalid currency code")
+        except Exception as e:
+            self.result_var.set("Error: " + str(e))
 
 def main():
     root = tk.Tk()
