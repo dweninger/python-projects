@@ -1,0 +1,28 @@
+{
+    "Reading": [],
+    "Want to Read": [
+        [
+            [
+                "The Great Gatsby",
+                "F Scott Fitzgerald"
+            ],
+            "http://books.google.com/books/content?id=NpknzgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        ],
+        [
+            [
+                "The Lord of the Rings",
+                "J. R. R. Tolkien"
+            ],
+            "http://books.google.com/books/content?id=GWorEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        ]
+    ],
+    "Read": [
+        [
+            [
+                "To Kill a Mockingbird",
+                "Harper Lee"
+            ],
+            "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        ]
+    ]
+}
