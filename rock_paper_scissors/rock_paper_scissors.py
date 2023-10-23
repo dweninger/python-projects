@@ -2,6 +2,8 @@ import tkinter as tk
 import random
 
 def determine_winner(player_choice):
+    player_label.config(
+        text=f"Your choice: {player_choice}")
     choices = ["Rock", "Paper", "Scissors"]
     computer_choice = random.choice(choices)
     computer_label.config(
